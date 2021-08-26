@@ -54,7 +54,7 @@ public class Producto {
 	@Override
 	public boolean equals(Object obj) {
 		
-		return ((Producto)obj).getIdProducto() == this.getIdProducto();
+		return ((Producto)obj).getIdProducto() == this.getIdProducto();		
 	
 	}
 		

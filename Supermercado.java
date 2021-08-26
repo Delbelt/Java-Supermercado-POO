@@ -58,16 +58,26 @@ public class Supermercado {
 	public boolean agregarProducto(String producto, float precio) throws Exception {
 		//COMPROBAR SI EL PRECIO INGRESADO ES POSITIVO
 		int i = 0;
-		
-		Producto lista = new Producto(listaProducto.size()+1, producto, precio);		
+		Producto lista = null;		
 
 		for (i = 0; i < listaProducto.size(); i++) 
 		{
 			if (listaProducto.get(i).getProducto() == producto)
-			{				
+			{					
 				throw new Exception("El producto '" + producto + "' ya esta registrado");		
 			}
-		}		
+		}
+		
+		if(listaProducto.size() == 0)
+		{
+			lista = new Producto(1, producto, precio);
+		}
+		
+		else 
+		{
+			lista = new Producto(listaProducto.get(listaProducto.size()-1).getIdProducto()+1, producto, precio);
+		}
+		
 			return listaProducto.add(lista);
 	}
 	
@@ -78,14 +88,16 @@ public class Supermercado {
 		
 		int i = 0;
 		Producto objeto = null;
-		
-		for (i = 0; i < listaProducto.size(); i++) 
+
+		while(objeto == null && i < listaProducto.size())
 		{
 			if (listaProducto.get(i).getIdProducto() == idProducto)
 			{		
 				objeto = listaProducto.get(i);					
 			}
-		}		
+			
+			i++;
+		}
 		
 		if(objeto == null)		
 		throw new Exception("No existe producto con el Id: " + idProducto);
@@ -123,17 +135,27 @@ public class Supermercado {
 //*************************************************************************************************************//	
 	public boolean agregarCliente(String cliente, long dni, String direccion) throws Exception {
 		
-		int i = 0;		
-
-		Cliente lista = new Cliente(listaCliente.size()+1, cliente, dni, direccion);
-
+		int i = 0;
+		Cliente lista = null;
+		
 		for (i = 0; i < listaCliente.size(); i++) 
 		{
 			if (listaCliente.get(i).getDni() == dni)
 			{				
 				throw new Exception("El cliente: " +cliente+ " ya esta registrado");		
 			}
-		}		
+		}
+		
+		if(listaCliente.size() == 0)
+		{
+			lista = new Cliente(1, cliente, dni, direccion);
+		}
+		
+		else
+		{
+			lista = new Cliente(listaCliente.get(listaCliente.size()-1).getIdCliente()+1, cliente, dni, direccion);	
+		}
+		
 			return listaCliente.add(lista);
 	}
 
@@ -143,14 +165,16 @@ public class Supermercado {
 		throw new Exception("No hay clientes registrados");
 		
 		int i = 0;
-		Cliente objeto = null;
-		
-		for (i = 0; i < listaCliente.size(); i++) 
+		Cliente objeto = null;		
+
+		while(objeto == null && i < listaCliente.size())
 		{
 			if (listaCliente.get(i).getIdCliente() == idCliente)
 			{		
 				objeto = listaCliente.get(i);					
 			} 
+			
+			i++;
 		}		
 		
 		if(objeto == null)		
@@ -180,23 +204,32 @@ public class Supermercado {
 		objeto.setDireccion(direccion);
 		
 		return true;	
-	}
-	
-//*************************************************************************************************************//	
+	}	
+
 //*************************************************************************************************************//	
 	public boolean agregarCarrito(LocalDate fecha, LocalTime hora, Cliente cliente) throws Exception {
 		
-		int i = 0;		
-
-		Carrito lista = new Carrito(listaCarrito.size()+1,fecha, hora, cliente);
-
+		int i = 0;
+		Carrito lista = null;
+		
 		for (i = 0; i < listaCarrito.size(); i++) 
 		{
 			if (listaCarrito.get(i).getCliente().equals(cliente))
 			{				
 				throw new Exception("El carrito ya esta registrado");		
 			}
-		}		
+		}
+		
+		if(listaCarrito.size() == 0)
+		{
+			lista = new Carrito(1, fecha, hora, cliente);
+		}
+		
+		else
+		{
+			lista = new Carrito(listaCarrito.get(listaCarrito.size()-1).getIdCarrito()+1, fecha, hora, cliente);
+		}
+		
 			return listaCarrito.add(lista);
 	}
 	
@@ -206,14 +239,16 @@ public class Supermercado {
 		throw new Exception("No hay clientes registrados");
 		
 		int i = 0;
-		Carrito objeto = null;
-		
-		for (i = 0; i < listaCarrito.size(); i++) 
+		Carrito objeto = null;		
+
+		while(objeto == null && i < listaCarrito.size())
 		{
 			if (listaCarrito.get(i).getIdCarrito() == idCarrito)
 			{		
 				objeto = listaCarrito.get(i);					
 			}
+			
+			i++;
 		}		
 		
 		if(objeto == null)		
@@ -226,7 +261,7 @@ public class Supermercado {
 						
 		return listaCarrito.remove(traerCarrito(idCarrito)); //Remueve por objeto - se puede por index		
 	}
-		
+	
 //*************************************************************************************************************//		
 	
 	public float calcularTotal(Cliente cliente) throws Exception {	

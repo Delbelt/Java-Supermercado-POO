@@ -225,7 +225,7 @@ public class testSupermercado {
 				
 				System.out.println("");
 				
-				System.out.println("Test 13: eliminar producto uno");
+				System.out.println("Test 13: Eliminar producto uno");
 				s1.eliminarProducto(1);	
 				System.out.println("OK");
 				
@@ -243,7 +243,7 @@ public class testSupermercado {
 				
 				System.out.println("");
 				
-				System.out.println("Test 14: Intentar eliminar cliente");
+				System.out.println("Test 14: Eliminar cliente");
 				s1.eliminarCliente(1);
 				System.out.println("OK");
 				
