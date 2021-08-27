@@ -15,7 +15,7 @@ public class testSupermercado {
 			
 			System.out.println("");
 			
-			System.out.println("Test 1: Agregar tres productos");	
+			System.out.println("Test 1: Agregar tres productos a la gondola");	
 			s1.agregarProducto("Producto uno", 4);
 			s1.agregarProducto("Producto dos", 10);
 			s1.agregarProducto("Producto tres", 10);
@@ -69,7 +69,7 @@ public class testSupermercado {
 				System.out.println("");
 				
 				System.out.println("Test 4: Agregar cliente");	
-				s1.agregarCliente("nahuel", 40667 , "brasil 2030");
+				s1.agregarCliente("Nahuel", 12345678 , "calle 1234");
 				System.out.println("OK");
 				
 				}
@@ -140,8 +140,8 @@ public class testSupermercado {
 				System.out.println("");
 				
 				System.out.println("Test 8: Calcular Sub-Total de cada item del carrito");
-				System.out.println(s1.traerCarrito(1).traerItem(1).calcularSubTotal());
-				System.out.println(s1.traerCarrito(1).traerItem(2).calcularSubTotal());
+				System.out.println(s1.traerCarrito(1).traerItem(1)+": "+ s1.traerCarrito(1).traerItem(1).calcularSubTotal());
+				System.out.println(s1.traerCarrito(1).traerItem(2)+": "+ s1.traerCarrito(1).traerItem(2).calcularSubTotal());
 				System.out.println("OK");
 				
 				}
@@ -158,8 +158,9 @@ public class testSupermercado {
 				System.out.println("");
 				
 				System.out.println("Test 9: Calcular total a pagar de un cliente");	
-				System.out.println(s1.calcularTotal(s1.traerCliente(1)));
-				System.out.println();
+				//System.out.println(s1.calcularTotal(s1.traerCliente(1))); //Por Id - Funcionado correctamente
+				System.out.println(s1.calcularTotal(12345678)); //Por documento - Funcionando correctamente
+				System.out.println("OK");
 				
 				}
 			

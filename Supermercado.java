@@ -2,281 +2,137 @@ package supermercado;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Supermercado {
+		
+	private ProductoABM productoABM = new ProductoABM();
+	private ClienteABM clienteABM = new ClienteABM();	
+	private CarritoABM carritoABM = new CarritoABM();
 	
-	private List <Producto> listaProducto = new ArrayList<Producto>();
-	private List <Cliente> listaCliente = new ArrayList<Cliente>();
-	private List <Carrito> listaCarrito = new ArrayList<Carrito>();	
-
-	public Supermercado() {
-		
-		super();
-	}		
-
-	public List<Producto> getListaProducto() {
-		
-		return listaProducto;
-	}
-
-	public void setListaProducto(List<Producto> listaProducto) {
-		
-		this.listaProducto = listaProducto;
-	}
-
-	public List<Cliente> getListaCliente() {
-		
-		return listaCliente;
-	}	
-
-	public void setListaCliente(List<Cliente> listaCliente) {
-		
-		this.listaCliente = listaCliente;
-	}
-
-	public List<Carrito> getListaCarrito() {
-		
-		return listaCarrito;
-	}
-
-	public void setListaCarrito(List<Carrito> listaCarrito) {
-		
-		this.listaCarrito = listaCarrito;
-	}
+	public Supermercado() {}	
 	
+	public ProductoABM getProductoABM() {
+		return productoABM;
+	}
+
+	public void setProductoABM(ProductoABM productoABM) {
+		this.productoABM = productoABM;
+	}
+
+	public ClienteABM getClienteABM() {
+		return clienteABM;
+	}
+
+	public void setClienteABM(ClienteABM clienteABM) {
+		this.clienteABM = clienteABM;
+	}
+
+	public CarritoABM getCarritoABM() {
+		return carritoABM;
+	}
+
+	public void setCarritoABM(CarritoABM carritoABM) {
+		this.carritoABM = carritoABM;
+	}
+
 	@Override
 	public String toString() {
-		
-		return "Supermercado [listaProducto=" + listaProducto + ", listaCliente=" + listaCliente + ", listaCarrito="
-				+ listaCarrito + "]";
+		return "Supermercado [productoABM=" + productoABM + ", clienteABM=" + clienteABM + ", carritoABM=" + carritoABM
+				+ "]";
 	}
-	
-//*************************************************************************************************************//	
-	public boolean agregarProducto(String producto, float precio) throws Exception {
-		//COMPROBAR SI EL PRECIO INGRESADO ES POSITIVO
-		int i = 0;
-		Producto lista = null;		
 
-		for (i = 0; i < listaProducto.size(); i++) 
-		{
-			if (listaProducto.get(i).getProducto() == producto)
-			{					
-				throw new Exception("El producto '" + producto + "' ya esta registrado");		
-			}
-		}
+	//*************************************************************************************************************//	
+	public boolean agregarProducto(String producto, float precio) throws Exception {
 		
-		if(listaProducto.size() == 0)
-		{
-			lista = new Producto(1, producto, precio);
-		}
-		
-		else 
-		{
-			lista = new Producto(listaProducto.get(listaProducto.size()-1).getIdProducto()+1, producto, precio);
-		}
-		
-			return listaProducto.add(lista);
+			return productoABM.agregarProducto(producto, precio);
 	}
 	
 	public Producto traerProducto(int idProducto) throws Exception	{
 		
-		if(listaProducto.size() == 0)		
-		throw new Exception("No hay productos en las gondolas");
-		
-		int i = 0;
-		Producto objeto = null;
-
-		while(objeto == null && i < listaProducto.size())
-		{
-			if (listaProducto.get(i).getIdProducto() == idProducto)
-			{		
-				objeto = listaProducto.get(i);					
-			}
-			
-			i++;
-		}
-		
-		if(objeto == null)		
-		throw new Exception("No existe producto con el Id: " + idProducto);
-		
-		return objeto;
+		return productoABM.traerProducto(idProducto);
 	}
 	
 	public boolean modificarProducto(int idProducto, String producto, float precio) throws Exception {
-		//AGREGAR QUE SI HAY PRODUCTOS EN UN CARRITO NO SE PUEDA MODIFICAR
-		Producto objeto = traerProducto(idProducto);
 		
-		objeto.setProducto(producto);
-		objeto.setPrecio(precio);
-		
-		return true;	
+		return productoABM.modificarProducto(idProducto, producto, precio);
 	}
 	
 	public boolean eliminarProducto(int idProducto) throws Exception {
 		
 		int i, j;
 		
-		for(i = 0 ; i < listaCarrito.size() ; i++)
+		for(i = 0 ; i < carritoABM.getListaCarrito().size() ; i++) //RECORRE LA LISTA DE CARRITOS
 		{
-			for(j = 0 ; j < listaCarrito.get(i).getListaItem().size() ; j++)
+			for(j = 0 ; j < carritoABM.getListaCarrito().get(i).getListaItem().size() ; j++) //RECORRE LA LISTA DE ITEMS DEL CARRITO
 			{
-				if(listaCarrito.get(i).getListaItem().get(j).getProducto().equals(traerProducto(idProducto)))
+				if(carritoABM.getListaCarrito().get(i).getListaItem().get(j).getProducto().equals(traerProducto(idProducto)))
 				throw new Exception("No se puede eliminar un producto que exista en una carrito de compras");
 			}
-		}		
-				
-		return listaProducto.remove(traerProducto(idProducto)); //Remueve por objeto - se puede por index
+		}
 		
+		return productoABM.eliminarProducto(idProducto);
 	}
 
 //*************************************************************************************************************//	
 	public boolean agregarCliente(String cliente, long dni, String direccion) throws Exception {
 		
-		int i = 0;
-		Cliente lista = null;
-		
-		for (i = 0; i < listaCliente.size(); i++) 
-		{
-			if (listaCliente.get(i).getDni() == dni)
-			{				
-				throw new Exception("El cliente: " +cliente+ " ya esta registrado");		
-			}
-		}
-		
-		if(listaCliente.size() == 0)
-		{
-			lista = new Cliente(1, cliente, dni, direccion);
-		}
-		
-		else
-		{
-			lista = new Cliente(listaCliente.get(listaCliente.size()-1).getIdCliente()+1, cliente, dni, direccion);	
-		}
-		
-			return listaCliente.add(lista);
+			return clienteABM.agregarCliente(cliente, dni, direccion);
 	}
 
 	public Cliente traerCliente(int idCliente) throws Exception	{
 		
-		if(listaCliente.size() == 0)		
-		throw new Exception("No hay clientes registrados");
-		
-		int i = 0;
-		Cliente objeto = null;		
-
-		while(objeto == null && i < listaCliente.size())
-		{
-			if (listaCliente.get(i).getIdCliente() == idCliente)
-			{		
-				objeto = listaCliente.get(i);					
-			} 
-			
-			i++;
-		}		
-		
-		if(objeto == null)		
-		throw new Exception("No existe el cliente con el Id: " + idCliente);
-		
-		return objeto;
+			return clienteABM.traerCliente(idCliente);
 	}
 
 	public boolean eliminarCliente(int idCliente) throws Exception {
 		
 		int i;
 		
-		for(i = 0 ; i < listaCarrito.size() ; i++)
-		{		
-			if(listaCarrito.get(i).getCliente().equals(traerCliente(idCliente)))
+		for(i = 0 ; i < carritoABM.getListaCarrito().size() ; i++)
+		{
+			if(carritoABM.getListaCarrito().get(i).getCliente().equals(traerCliente(idCliente)))
 			throw new Exception("No se puede eliminar un cliente que tenga una compra pendiente");
 		}		
 				
-		return listaCliente.remove(traerCliente(idCliente)); //Remueve por objeto - se puede por index		
+		return clienteABM.eliminarCliente(idCliente);
 	}
 	
 	public boolean modificarCliente(int idCliente, String cliente, long dni, String direccion) throws Exception {
 		
-		Cliente objeto = traerCliente(idCliente);
-		objeto.setCliente(cliente);
-		objeto.setDni(dni);
-		objeto.setDireccion(direccion);
-		
-		return true;	
+		return clienteABM.modificarCliente(idCliente, cliente, dni, direccion);
 	}	
 
 //*************************************************************************************************************//	
 	public boolean agregarCarrito(LocalDate fecha, LocalTime hora, Cliente cliente) throws Exception {
 		
-		int i = 0;
-		Carrito lista = null;
-		
-		for (i = 0; i < listaCarrito.size(); i++) 
-		{
-			if (listaCarrito.get(i).getCliente().equals(cliente))
-			{				
-				throw new Exception("El carrito ya esta registrado");		
-			}
-		}
-		
-		if(listaCarrito.size() == 0)
-		{
-			lista = new Carrito(1, fecha, hora, cliente);
-		}
-		
-		else
-		{
-			lista = new Carrito(listaCarrito.get(listaCarrito.size()-1).getIdCarrito()+1, fecha, hora, cliente);
-		}
-		
-			return listaCarrito.add(lista);
+		return carritoABM.agregarCarrito(fecha, hora, cliente);
 	}
 	
 	public Carrito traerCarrito(int idCarrito) throws Exception	{
 		
-		if(listaCarrito.size() == 0)		
-		throw new Exception("No hay clientes registrados");
-		
-		int i = 0;
-		Carrito objeto = null;		
-
-		while(objeto == null && i < listaCarrito.size())
-		{
-			if (listaCarrito.get(i).getIdCarrito() == idCarrito)
-			{		
-				objeto = listaCarrito.get(i);					
-			}
-			
-			i++;
-		}		
-		
-		if(objeto == null)		
-		throw new Exception("No existe el carrito con el Id: " + idCarrito);
-		
-		return objeto;
+		return carritoABM.traerCarrito(idCarrito);
 	}
 
 	public boolean eliminarCarrito(int idCarrito) throws Exception {
 						
-		return listaCarrito.remove(traerCarrito(idCarrito)); //Remueve por objeto - se puede por index		
+		return carritoABM.eliminarCarrito(idCarrito);
 	}
 	
 //*************************************************************************************************************//		
 	
 	public float calcularTotal(Cliente cliente) throws Exception {	
 		
-		if(listaCliente.size()==0)
+		if(clienteABM.getListaCliente().size() == 0)
 		throw new Exception("No hay clientes registrados");
 		
 		int i = 0;
-		float total = 0;
-		
-		for(i=0;i<listaCarrito.size();i++)
-		{			
-			if(listaCarrito.get(i).getCliente().equals(cliente))
-			{
-				total += listaCarrito.get(i).calcularTotal();			
+		float total = 0;		
+
+		for(i = 0 ; i < carritoABM.getListaCarrito().size(); i++)
+		{
+			if(carritoABM.getListaCarrito().get(i).getCliente().equals(cliente))
+			{	
+				total += carritoABM.getListaCarrito().get(i).calcularTotal();
 			}
 		}
 		
@@ -288,17 +144,17 @@ public class Supermercado {
 	
 	public float calcularTotal(int dniCliente) throws Exception {	
 		
-		if(listaCliente.size()==0)
+		if(clienteABM.getListaCliente().size() == 0)
 		throw new Exception("No hay clientes registrados");
 		
 		int i = 0;
 		float total = 0;
 		
-		for(i=0;i<listaCarrito.size();i++)
-		{			
-			if(listaCarrito.get(i).getCliente().getDni() == dniCliente)
-			{
-				total += listaCarrito.get(i).calcularTotal();			
+		for(i = 0 ; i < carritoABM.getListaCarrito().size(); i++)
+		{	
+			if(carritoABM.getListaCarrito().get(i).getCliente().getDni() == dniCliente)
+			{				
+				total += carritoABM.getListaCarrito().get(i).calcularTotal();
 			}
 		}
 		

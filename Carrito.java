@@ -19,8 +19,7 @@ public class Carrito {
 		this.idCarrito = idCarrito;
 		this.fecha = fecha;
 		this.hora = hora;
-		this.cliente = cliente;
-		
+		this.cliente = cliente;		
 	}
 
 	public int getIdCarrito() {
