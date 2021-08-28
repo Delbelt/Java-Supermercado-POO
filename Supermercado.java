@@ -41,7 +41,7 @@ public class Supermercado {
 				+ "]";
 	}
 
-	//*************************************************************************************************************//	
+//*************************************************************************************************************//	
 	public boolean agregarProducto(String producto, float precio) throws Exception {
 		
 			return productoABM.agregarProducto(producto, precio);

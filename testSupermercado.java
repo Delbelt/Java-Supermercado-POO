@@ -159,7 +159,8 @@ public class testSupermercado {
 				
 				System.out.println("");
 				
-				System.out.println("Test 9: Calcular total a pagar de un cliente");	
+				System.out.println("Test 9: Calcular total a pagar de un cliente");
+				System.out.println(s1.traerCarrito(1).calcularTotal());
 				//System.out.println(s1.calcularTotal(s1.traerCliente(1))); //Por Id - Funcionado correctamente
 				System.out.println(s1.calcularTotal(12345678)); //Por documento - Funcionando correctamente
 				System.out.println("OK");
