@@ -18,7 +18,8 @@ public class testSupermercado {
 			System.out.println("Test 1: Agregar tres productos a la gondola");	
 			s1.agregarProducto("Producto uno", 4);
 			s1.agregarProducto("Producto dos", 10);
-			s1.agregarProducto("Producto tres", 10);
+			s1.agregarProducto("Producto tres", 17);
+			s1.agregarProducto("Producto cuatro", 87);
 			System.out.println("OK");	
 			
 			}
@@ -34,8 +35,9 @@ public class testSupermercado {
 			
 			System.out.println("");
 			
-			System.out.println("Test 2: Traer producto 1");	
+			System.out.println("Test 2: Traer producto 1 y 3");	
 			System.out.println(s1.traerProducto(1));
+			System.out.println(s1.traerProducto(3));
 			System.out.println("OK");
 			
 			}
@@ -139,7 +141,7 @@ public class testSupermercado {
 				
 				System.out.println("");
 				
-				System.out.println("Test 8: Calcular Sub-Total de cada item del carrito");
+				System.out.println("Test 8: Calcular Sub-Total de cada item del carrito (2 items)");
 				System.out.println(s1.traerCarrito(1).traerItem(1)+": "+ s1.traerCarrito(1).traerItem(1).calcularSubTotal());
 				System.out.println(s1.traerCarrito(1).traerItem(2)+": "+ s1.traerCarrito(1).traerItem(2).calcularSubTotal());
 				System.out.println("OK");
@@ -208,9 +210,9 @@ public class testSupermercado {
 			try {
 				
 				System.out.println("");
-				
-				System.out.println("Test 12: Eliminar carrito de compras del cliente");
-				s1.eliminarCarrito(1);
+				System.out.println("Test 12: Reducir cantidad de producto agregado en 10 (cantidad 15)");
+				s1.traerCarrito(1).eliminarItem(s1.traerProducto(1), 10);
+				System.out.print(s1.traerCarrito(1).traerItem(1));
 				System.out.println("OK");
 				
 				}
@@ -225,8 +227,57 @@ public class testSupermercado {
 			try {
 				
 				System.out.println("");
+				System.out.println("Test 13: Eliminar item (Test 12) del carrito");
+				s1.traerCarrito(1).eliminarItem(s1.traerProducto(1), 5);
+				System.out.println("OK");
 				
-				System.out.println("Test 13: Eliminar producto uno");
+				}
+			
+				catch(Exception e) 
+				{
+					System.out.println("Exception: "+e.getMessage());
+				}
+			
+		//Test 14 *******************************
+			
+			try {
+				
+				System.out.println("");
+				System.out.println("Test 14: Traer item eliminado (Test 13) (salta excepcion)");
+				System.out.print(s1.traerCarrito(1).traerItem(1));
+				
+				}
+			
+				catch(Exception e) 
+				{
+					System.out.println("Exception: "+e.getMessage());
+					System.out.println("OK");
+				}
+			
+		//Test 15 *******************************
+			
+			try {
+				
+				System.out.println("");
+				
+				System.out.println("Test 15: Eliminar carrito de compras del cliente");
+				s1.eliminarCarrito(1);
+				System.out.println("OK");
+				
+				}
+			
+				catch(Exception e) 
+				{
+					System.out.println("Exception: "+e.getMessage());
+				}
+			
+		//Test 16 *******************************
+			
+			try {
+				
+				System.out.println("");
+				
+				System.out.println("Test 16: Eliminar producto uno");
 				s1.eliminarProducto(1);	
 				System.out.println("OK");
 				
@@ -238,13 +289,13 @@ public class testSupermercado {
 					
 				}
 			
-		//Test 14 *******************************
+		//Test 17 *******************************
 			
 			try {
 				
 				System.out.println("");
 				
-				System.out.println("Test 14: Eliminar cliente");
+				System.out.println("Test 17: Eliminar cliente");
 				s1.eliminarCliente(1);
 				System.out.println("OK");
 				
@@ -254,6 +305,5 @@ public class testSupermercado {
 				{
 					System.out.println("Exception: "+e.getMessage());					
 				}
-	}
-
+	}	
 }

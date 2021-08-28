@@ -85,27 +85,39 @@ public class Carrito {
 
 	public boolean agregarItem(Producto producto, int cantidad) throws Exception {
 		
-		if(cantidad == 0)
-		throw new Exception("No se puede agregar 0 cantidad de productos");
+		if(cantidad <= 0)
+		throw new Exception("No se puede agregar menos de una unidad");
 		
 		int i = 0;
-		boolean creado = false;
-
-		for (i = 0; i < listaItem.size(); i++) 
+		ItemCarrito objeto = null;
+		
+		if(listaItem.size() == 0) //Si la lista no existe, crea el primer Item
 		{
-			if (listaItem.get(i).getProducto().equals(producto)) 
-			{
-				listaItem.get(i).setCantidad(listaItem.get(i).getCantidad() + cantidad);
-				creado = true;
-			}		
+			objeto = new ItemCarrito(1, producto, cantidad);
+			listaItem.add(objeto);
 		}
-			if(creado == false) //si no esta creado, crea el item
+		
+		else
+		{
+			while(i < listaItem.size() && objeto == null)
 			{
-				ItemCarrito objeto = new ItemCarrito(listaItem.size()+1, producto, cantidad);
-				listaItem.add(objeto);
+				if (listaItem.get(i).getProducto().equals(producto)) 
+				{
+					objeto = listaItem.get(i);
+					objeto.setCantidad(listaItem.get(i).getCantidad() + cantidad);	//Si el Item existe, le suma la cantidad nada mas
+				}
+				
+				i++;
 			}
 			
-			return creado;
+				if(objeto == null) //si no esta el Item en la lista, lo crea con el Id correspondiente
+				{
+					objeto = new ItemCarrito(listaItem.get(listaItem.size()-1).getIdItem()+1, producto, cantidad);
+					listaItem.add(objeto);
+				}
+		}
+		
+			return (objeto != null); //Si se crea el objeto = true, si el objeto solo se le sumo items = false
 	}
 	
 	public boolean eliminarItem(Producto producto, int cantidad) throws Exception {
@@ -113,26 +125,35 @@ public class Carrito {
 		if(listaItem.size() == 0)
 		throw new Exception("No existe la lista de items");
 		
+		if(cantidad <= 0)
+		throw new Exception("No se puede eliminar menos de una unidad");
+		
 		int i = 0;
-		boolean eliminado = false;		
-
-		for (i = 0; i < listaItem.size(); i++) 
+		boolean encontrado = false;
+		
+		while(i < listaItem.size() && encontrado == false)
 		{
 			if (listaItem.get(i).getProducto().equals(producto)) 
 			{
 				if(listaItem.get(i).getCantidad() > cantidad)
 				{
 					listaItem.get(i).setCantidad(listaItem.get(i).getCantidad() - cantidad);
+					encontrado = true;
 				}
 				
 				else
 				{
-					listaItem.remove(i);	
-					eliminado = true;
+					listaItem.remove(i);
+					encontrado = true;
 				}
-			}		
-		}				
-					return eliminado;			
+			}			
+
+			i++;
+		}
+					if(encontrado == false)
+					throw new Exception("El producto no se encuentra en la lista de Items");
+					
+					return (producto == null);		
 	}
 	
 	public ItemCarrito traerItem(int idItem) throws Exception {
@@ -141,21 +162,23 @@ public class Carrito {
 		throw new Exception("No existe la lista de Items");
 		
 		int i = 0;
-		ItemCarrito objeto = null;
-		
-		for (i = 0; i < listaItem.size(); i++) 
+		ItemCarrito objeto = null;		
+
+		while(i < listaItem.size() && objeto == null)
 		{
 			if (listaItem.get(i).getIdItem() == idItem)
 			{		
 				objeto = listaItem.get(i);					
 			}
+			
+			i++;
 		}		
 		
 		if(objeto == null)		
-		throw new Exception("No existe el carrito con el Id: " + idItem);
+		throw new Exception("No existe el item con el Id: " + idItem);
 		
 		return objeto;
-	}
+	}	
 	
 	public float calcularTotal()
 	{
