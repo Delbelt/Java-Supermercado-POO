@@ -88,6 +88,9 @@ public class Carrito {
 		if(cantidad <= 0)
 		throw new Exception("No se puede agregar menos de una unidad");
 		
+		if(producto == null)
+		throw new Exception("No existe el producto");
+		
 		int i = 0;
 		ItemCarrito objeto = null;
 		
@@ -104,7 +107,7 @@ public class Carrito {
 				if (listaItem.get(i).getProducto().equals(producto)) 
 				{
 					objeto = listaItem.get(i);
-					objeto.setCantidad(listaItem.get(i).getCantidad() + cantidad);	//Si el Item existe, le suma la cantidad nada mas
+					objeto.setCantidad(listaItem.get(i).getCantidad() + cantidad);	//Si el Item existe, le suma la cantidad
 				}
 				
 				i++;
@@ -117,13 +120,10 @@ public class Carrito {
 				}
 		}
 		
-			return (objeto != null); //Si se crea el objeto = true, si el objeto solo se le sumo items = false
+			return (objeto != null); //Si se crea el objeto = true, si no se encuentra false
 	}
 	
 	public boolean eliminarItem(Producto producto, int cantidad) throws Exception {
-				
-		if(listaItem.size() == 0)
-		throw new Exception("No existe la lista de items");
 		
 		if(cantidad <= 0)
 		throw new Exception("No se puede eliminar menos de una unidad");
@@ -153,13 +153,10 @@ public class Carrito {
 					if(encontrado == false)
 					throw new Exception("El producto no se encuentra en la lista de Items");
 					
-					return (producto == null);		
+					return (producto == null);	//Devuelve True si lo elimino	
 	}
 	
 	public ItemCarrito traerItem(int idItem) throws Exception {
-		
-		if(listaItem.size() == 0)		
-		throw new Exception("No existe la lista de Items");
 		
 		int i = 0;
 		ItemCarrito objeto = null;		
@@ -172,13 +169,21 @@ public class Carrito {
 			}
 			
 			i++;
-		}		
-		
-		if(objeto == null)		
-		throw new Exception("No existe el item con el Id: " + idItem);
+		}
 		
 		return objeto;
-	}	
+	}
+	
+	public void comprobarProductoListaItem(Producto producto) throws Exception {
+		
+		int i;
+		
+		for(i = 0; i < listaItem.size(); i++)
+		{
+			if(listaItem.get(i).getProducto().equals(producto))
+			throw new Exception("No se puede eliminar un producto que exista en una carrito de compras");			
+		}
+	}
 	
 	public float calcularTotal()
 	{
@@ -192,5 +197,4 @@ public class Carrito {
 		
 		return total;
 	}
-	
 }

@@ -7,7 +7,7 @@ public class testSupermercado {
 
 	public static void main(String[] args) {		
 		
-		Supermercado s1 = new Supermercado();
+		Supermercado s1 = new Supermercado();		
 		
 		//Test 1 *******************************
 		
@@ -19,11 +19,10 @@ public class testSupermercado {
 			s1.agregarProducto("Producto uno", 4);
 			s1.agregarProducto("Producto dos", 10);
 			s1.agregarProducto("Producto tres", 17);
-			s1.agregarProducto("Producto cuatro", 87);
 			System.out.println("OK");	
 			
 			}
-		
+	
 			catch(Exception e) 
 			{
 				System.out.println("Exception: "+e.getMessage());
@@ -104,11 +103,11 @@ public class testSupermercado {
 				
 				System.out.println("");
 				
-				System.out.println("Test 6: Agregar 4 items al carrito");
+				System.out.println("Test 6: Agregar 2 items al carrito");				
 				s1.traerCarrito(1).agregarItem(s1.traerProducto(1), 5);
 				s1.traerCarrito(1).agregarItem(s1.traerProducto(1), 10);
 				s1.traerCarrito(1).agregarItem(s1.traerProducto(2), 5);
-				s1.traerCarrito(1).agregarItem(s1.traerProducto(2), 5);	
+				s1.traerCarrito(1).agregarItem(s1.traerProducto(2), 5);				
 				System.out.println("OK");
 				
 				}
@@ -160,9 +159,9 @@ public class testSupermercado {
 				System.out.println("");
 				
 				System.out.println("Test 9: Calcular total a pagar de un cliente");
-				System.out.println(s1.traerCarrito(1).calcularTotal());
-				//System.out.println(s1.calcularTotal(s1.traerCliente(1))); //Por Id - Funcionado correctamente
-				System.out.println(s1.calcularTotal(12345678)); //Por documento - Funcionando correctamente
+				//System.out.println(s1.traerCarrito(1).calcularTotal());
+				System.out.println("Calcular por cliente: " + s1.calcularTotal(s1.traerCliente(1))); //Por cliente - Funcionado correctamente
+				System.out.println("Calcular por documento: " + s1.calcularTotal(12345678)); //Por documento - Funcionando correctamente
 				System.out.println("OK");
 				
 				}
@@ -244,15 +243,15 @@ public class testSupermercado {
 			try {
 				
 				System.out.println("");
-				System.out.println("Test 14: Traer item eliminado (Test 13) (salta excepcion)");
-				System.out.print(s1.traerCarrito(1).traerItem(1));
+				System.out.println("Test 14: Traer item eliminado (Test 13) (salta null)");
+				System.out.println(s1.traerCarrito(1).traerItem(1));				
+				System.out.println("OK");
 				
 				}
 			
 				catch(Exception e) 
 				{
-					System.out.println("Exception: "+e.getMessage());
-					System.out.println("OK");
+					System.out.println("Exception: "+e.getMessage());					
 				}
 			
 		//Test 15 *******************************

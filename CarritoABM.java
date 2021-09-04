@@ -33,7 +33,8 @@ public class CarritoABM {
 		
 		for (i = 0; i < listaCarrito.size(); i++) 
 		{
-			if (listaCarrito.get(i).getCliente().equals(cliente))
+
+			if(listaCarrito.get(i).getFecha() == fecha && listaCarrito.get(i).getHora() == hora &&  listaCarrito.get(i).getCliente().equals(cliente))
 			{				
 				throw new Exception("El carrito ya esta registrado");		
 			}
@@ -54,9 +55,6 @@ public class CarritoABM {
 	
 	public Carrito traerCarrito(int idCarrito) throws Exception	{
 		
-		if(listaCarrito.size() == 0)		
-		throw new Exception("No hay clientes registrados");
-		
 		int i = 0;
 		Carrito objeto = null;		
 
@@ -68,16 +66,39 @@ public class CarritoABM {
 			}
 			
 			i++;
-		}		
-		
-		if(objeto == null)		
-		throw new Exception("No existe el carrito con el Id: " + idCarrito);
+		}
 		
 		return objeto;
 	}
 
 	public boolean eliminarCarrito(int idCarrito) throws Exception {
+		
+		Carrito objeto = traerCarrito(idCarrito);
+		
+		if(objeto == null)		
+		throw new Exception("No existe el carrito con el Id: " + idCarrito);
 						
-		return listaCarrito.remove(traerCarrito(idCarrito)); //Remueve por objeto - se puede por index		
+		return listaCarrito.remove(traerCarrito(idCarrito)); //Remueve por objeto	
+	}
+	
+	public void comprobarProductoListaCarrito(Producto producto) throws Exception {
+		
+		int i;		
+		
+		for(i = 0 ; i < listaCarrito.size() ; i++) //RECORRE LA LISTA DE CARRITOS
+		{
+			listaCarrito.get(i).comprobarProductoListaItem(producto);
+		}
+	}
+	
+	public void comprobarClienteListaCarrito(Cliente cliente) throws Exception {
+		
+		int i;
+		
+		for(i = 0; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getCliente().equals(cliente))
+			throw new Exception("No se puede eliminar un cliente que tenga una compra pendiente");
+		}
 	}
 }

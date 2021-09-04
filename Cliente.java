@@ -64,9 +64,9 @@ public class Cliente {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		
-		return ((Cliente)obj).getIdCliente() == this.getIdCliente();		
+	public boolean equals(Object obj) {	
+
+		return ((Cliente)obj).getDni() == this.getDni();
 	}		
 
 }

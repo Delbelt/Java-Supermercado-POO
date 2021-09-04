@@ -59,16 +59,12 @@ public class Supermercado {
 	
 	public boolean eliminarProducto(int idProducto) throws Exception {
 		
-		int i, j;
+		Producto objeto = traerProducto(idProducto);
 		
-		for(i = 0 ; i < carritoABM.getListaCarrito().size() ; i++) //RECORRE LA LISTA DE CARRITOS
-		{
-			for(j = 0 ; j < carritoABM.getListaCarrito().get(i).getListaItem().size() ; j++) //RECORRE LA LISTA DE ITEMS DEL CARRITO
-			{
-				if(carritoABM.getListaCarrito().get(i).getListaItem().get(j).getProducto().equals(traerProducto(idProducto)))
-				throw new Exception("No se puede eliminar un producto que exista en una carrito de compras");
-			}
-		}
+		if(objeto == null) 
+		throw new Exception("No existe producto con el Id: " + idProducto);
+		
+		carritoABM.comprobarProductoListaCarrito(objeto);
 		
 		return productoABM.eliminarProducto(idProducto);
 	}
@@ -85,14 +81,13 @@ public class Supermercado {
 	}
 
 	public boolean eliminarCliente(int idCliente) throws Exception {
+	
+		Cliente objeto = traerCliente(idCliente);
 		
-		int i;
+		if(objeto == null)		
+		throw new Exception("No existe el cliente con el Id: " + idCliente);
 		
-		for(i = 0 ; i < carritoABM.getListaCarrito().size() ; i++)
-		{
-			if(carritoABM.getListaCarrito().get(i).getCliente().equals(traerCliente(idCliente)))
-			throw new Exception("No se puede eliminar un cliente que tenga una compra pendiente");
-		}		
+		carritoABM.comprobarClienteListaCarrito(objeto);
 				
 		return clienteABM.eliminarCliente(idCliente);
 	}
@@ -162,5 +157,29 @@ public class Supermercado {
 		throw new Exception("El cliente no se encuentra registrado en la lista");
 		
 		return total;
+	}	
+
+	public float calcularTotal(LocalDate fechaInicio, LocalDate fechaFin, Cliente cliente) throws Exception {	
+		
+		if(clienteABM.getListaCliente().size() == 0)
+		throw new Exception("No hay clientes registrados");
+		
+		int i = 0;
+		float total = 0;		
+
+		for(i = 0 ; i < carritoABM.getListaCarrito().size(); i++)
+		{
+			if(carritoABM.getListaCarrito().get(i).getCliente().equals(cliente))
+			{	
+				total += carritoABM.getListaCarrito().get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("El cliente no se encuentra registrado en la lista");
+		
+		return total;
 	}
+
+
 }

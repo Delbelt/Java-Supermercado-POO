@@ -52,9 +52,6 @@ public class ClienteABM {
 
 	public Cliente traerCliente(int idCliente) throws Exception	{
 		
-		if(listaCliente.size() == 0)		
-		throw new Exception("No hay clientes registrados");
-		
 		int i = 0;
 		Cliente objeto = null;		
 
@@ -67,9 +64,6 @@ public class ClienteABM {
 			
 			i++;
 		}		
-		
-		if(objeto == null)		
-		throw new Exception("No existe el cliente con el Id: " + idCliente);
 		
 		return objeto;
 	}

@@ -52,9 +52,6 @@ public class ProductoABM {
 	
 	public Producto traerProducto(int idProducto) throws Exception	{
 		
-		if(listaProducto.size() == 0)		
-		throw new Exception("No hay productos en las gondolas");
-		
 		int i = 0;
 		Producto objeto = null;
 
@@ -68,15 +65,15 @@ public class ProductoABM {
 			i++;
 		}
 		
-		if(objeto == null)		
-		throw new Exception("No existe producto con el Id: " + idProducto);
-		
 		return objeto;
 	}
 	
 	public boolean modificarProducto(int idProducto, String producto, float precio) throws Exception {
 		//AGREGAR QUE SI HAY PRODUCTOS EN UN CARRITO NO SE PUEDA MODIFICAR
 		Producto objeto = traerProducto(idProducto);
+		
+		if(objeto == null)		
+		throw new Exception("No existe producto con el Id: " + idProducto);
 		
 		objeto.setProducto(producto);
 		objeto.setPrecio(precio);
@@ -85,7 +82,7 @@ public class ProductoABM {
 	}
 	
 	public boolean eliminarProducto(int idProducto) throws Exception {
-				
+		
 		return listaProducto.remove(traerProducto(idProducto)); //Remueve por objeto - se puede por index		
 	}
 }
