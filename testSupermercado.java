@@ -108,8 +108,7 @@ public class testSupermercado {
 				s1.traerCarrito(1).agregarItem(s1.traerProducto(1), 10);
 				s1.traerCarrito(1).agregarItem(s1.traerProducto(2), 5);
 				s1.traerCarrito(1).agregarItem(s1.traerProducto(2), 5);				
-				System.out.println("OK");
-				
+				System.out.println("OK");				
 				}
 			
 				catch(Exception e) 
@@ -158,10 +157,16 @@ public class testSupermercado {
 				
 				System.out.println("");
 				
-				System.out.println("Test 9: Calcular total a pagar de un cliente");
-				//System.out.println(s1.traerCarrito(1).calcularTotal());
+				System.out.println("Test 9: Calcular total (9 metodos diferentes)");	
 				System.out.println("Calcular por cliente: " + s1.calcularTotal(s1.traerCliente(1))); //Por cliente - Funcionado correctamente
 				System.out.println("Calcular por documento: " + s1.calcularTotal(12345678)); //Por documento - Funcionando correctamente
+				System.out.println("Informe total mensual: " + s1.calcularTotal(LocalDate.of(2021, 8, 5), LocalDate.now()));
+				System.out.println("Informe total dia: " + s1.calcularTotal(LocalDate.now()));
+				System.out.println(("Informe total año y mes: " + s1.calcularTotal(9, 2021)));
+				System.out.println("Informe fecha entre/hasta de un cliente: " + s1.calcularTotal(LocalDate.of(2021, 8, 5), LocalDate.now(), s1.traerCliente(1)));
+				System.out.println("Calcular total fecha y cliente: " + s1.calcularTotal(LocalDate.now(), s1.traerCliente(1)));
+				System.out.println("Informe mes y año de un cliente: " +  s1.calcularTotal(9, 2021, s1.traerCliente(1)));
+				System.out.println("Informe mes y año por documento: " + s1.calcularTotal(9, 2021, 12345678));
 				System.out.println("OK");
 				
 				}

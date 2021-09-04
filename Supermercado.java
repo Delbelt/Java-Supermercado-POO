@@ -114,72 +114,48 @@ public class Supermercado {
 	}
 	
 //*************************************************************************************************************//		
-	
-	public float calcularTotal(Cliente cliente) throws Exception {	
+	public float calcularTotal(Cliente cliente) throws Exception {
 		
-		if(clienteABM.getListaCliente().size() == 0)
-		throw new Exception("No hay clientes registrados");
-		
-		int i = 0;
-		float total = 0;		
-
-		for(i = 0 ; i < carritoABM.getListaCarrito().size(); i++)
-		{
-			if(carritoABM.getListaCarrito().get(i).getCliente().equals(cliente))
-			{	
-				total += carritoABM.getListaCarrito().get(i).calcularTotal();
-			}
-		}
-		
-		if(total==0)
-		throw new Exception("El cliente no se encuentra registrado en la lista");
-		
-		return total;
+		return carritoABM.calcularTotal(cliente);
 	}
 	
-	public float calcularTotal(int dniCliente) throws Exception {	
+	public float calcularTotal(int dniCliente) throws Exception {
 		
-		if(clienteABM.getListaCliente().size() == 0)
-		throw new Exception("No hay clientes registrados");
-		
-		int i = 0;
-		float total = 0;
-		
-		for(i = 0 ; i < carritoABM.getListaCarrito().size(); i++)
-		{	
-			if(carritoABM.getListaCarrito().get(i).getCliente().getDni() == dniCliente)
-			{				
-				total += carritoABM.getListaCarrito().get(i).calcularTotal();
-			}
-		}
-		
-		if(total==0)
-		throw new Exception("El cliente no se encuentra registrado en la lista");
-		
-		return total;
+		return carritoABM.calcularTotal(dniCliente);
 	}	
 
-	public float calcularTotal(LocalDate fechaInicio, LocalDate fechaFin, Cliente cliente) throws Exception {	
+	public float calcularTotal(LocalDate fechaInicio, LocalDate fechaFin) throws Exception {
 		
-		if(clienteABM.getListaCliente().size() == 0)
-		throw new Exception("No hay clientes registrados");
-		
-		int i = 0;
-		float total = 0;		
+		return carritoABM.calcularTotal(fechaInicio, fechaFin);
+	}	
 
-		for(i = 0 ; i < carritoABM.getListaCarrito().size(); i++)
-		{
-			if(carritoABM.getListaCarrito().get(i).getCliente().equals(cliente))
-			{	
-				total += carritoABM.getListaCarrito().get(i).calcularTotal();
-			}
-		}
+	public float calcularTotal(LocalDate fecha) throws Exception {
 		
-		if(total==0)
-		throw new Exception("El cliente no se encuentra registrado en la lista");
+		return carritoABM.calcularTotal(fecha);
+	}	
+
+	public float calcularTotal(int mes, int anio) throws Exception {
 		
-		return total;
+		return carritoABM.calcularTotal(mes, anio);
 	}
+	
+	public float calcularTotal(LocalDate fechaInicio, LocalDate fechaFin, Cliente cliente) throws Exception {
+		
+		return carritoABM.calcularTotal(fechaInicio, fechaFin, cliente);
+	}
+	
+	public float calcularTotal(LocalDate fecha, Cliente cliente) throws Exception {
+		
+		return carritoABM.calcularTotal(fecha, cliente);
+	}	
+	
+	public float calcularTotal(int mes, int anio, Cliente cliente) throws Exception {
+		
+		return carritoABM.calcularTotal(mes, anio, cliente);
+	}
+	
+	public float calcularTotal(int mes, int anio, int dniCliente) throws Exception {
 
-
+		return carritoABM.calcularTotal(mes, anio, dniCliente);
+	}	
 }

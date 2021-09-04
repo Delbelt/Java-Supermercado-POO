@@ -26,6 +26,7 @@ public class CarritoABM {
 		return "CarritoABM [listaCarrito=" + listaCarrito + "]";
 	}
 	
+//*************************************************************************************************************//		
 	public boolean agregarCarrito(LocalDate fecha, LocalTime hora, Cliente cliente) throws Exception {
 		
 		int i = 0;
@@ -101,4 +102,195 @@ public class CarritoABM {
 			throw new Exception("No se puede eliminar un cliente que tenga una compra pendiente");
 		}
 	}
+
+//*************************************************************************************************************//
+	public float calcularTotal(Cliente cliente) throws Exception {
+		
+		int i = 0;
+		float total = 0;
+
+		for(i = 0; i < listaCarrito.size(); i++)
+		{	
+			if(listaCarrito.get(i).getCliente().equals(cliente))
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total == 0)
+		throw new Exception("El cliente no se encuentra registrado en la lista");
+		
+		return total;
+	}
+	
+	public float calcularTotal(int dniCliente) throws Exception {
+		
+		int i = 0;
+		float total = 0;		
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getCliente().getDni() == dniCliente)
+			{
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("El cliente no se encuentra registrado en la lista");
+		
+		return total;
+	}
+	
+	public float calcularTotal(LocalDate fechaInicio, LocalDate fechaFin) throws Exception {
+		
+		int i = 0;
+		float total = 0;		
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getFecha().isEqual(fechaInicio) || listaCarrito.get(i).getFecha().isAfter(fechaInicio)
+			&& listaCarrito.get(i).getFecha().isEqual(fechaFin) || listaCarrito.get(i).getFecha().isBefore(fechaFin))
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("No hay registros de compras entre " + fechaInicio + " y " + fechaFin);
+		
+		return total;
+	} 	
+	
+	public float calcularTotal(LocalDate fecha) throws Exception {
+		
+		int i = 0;
+		float total = 0;		
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getFecha().isEqual(fecha))
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("No hay registros de compras en la fecha:" + fecha);
+		
+		return total;
+	}
+	
+	public float calcularTotal(int mes, int anio) throws Exception {
+		
+		if(mes <= 0 || mes > 12)
+		throw new Exception("No existe el mes " + mes);
+		
+		int i = 0;
+		float total = 0;
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getFecha().getYear() == anio 
+			&& listaCarrito.get(i).getFecha().getMonthValue() == mes )
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("No hay registros de compras en el mes "+ mes + " del " + anio);
+		
+		return total;
+	}
+	
+	public float calcularTotal(LocalDate fechaInicio, LocalDate fechaFin, Cliente cliente) throws Exception {
+
+		int i = 0;
+		float total = 0;		
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getFecha().isEqual(fechaInicio) || listaCarrito.get(i).getFecha().isAfter(fechaInicio)
+			&& listaCarrito.get(i).getFecha().isEqual(fechaFin) || listaCarrito.get(i).getFecha().isBefore(fechaFin)
+			&& listaCarrito.get(i).getCliente().equals(cliente))
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("No hay registros de compras entre " + fechaInicio + " y " + fechaFin +" del cliente " + cliente);
+		
+		return total;
+	}
+	
+	public float calcularTotal(LocalDate fecha, Cliente cliente) throws Exception {
+		
+		int i = 0;
+		float total = 0;		
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getFecha().isEqual(fecha) && listaCarrito.get(i).getCliente().equals(cliente))
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("No hay registros de compras en la fecha:" + fecha + " del cliente " + cliente);
+		
+		return total;
+	}
+	
+	public float calcularTotal(int mes, int anio, Cliente cliente) throws Exception {
+		
+		if(mes <= 0 || mes > 12)
+		throw new Exception("No existe el mes " + mes);
+		
+		int i = 0;
+		float total = 0;
+
+		for(i = 0 ; i < listaCarrito.size(); i++)
+		{
+			if(listaCarrito.get(i).getFecha().getYear() == anio 
+			&& listaCarrito.get(i).getFecha().getMonthValue() == mes
+			&& listaCarrito.get(i).getCliente().equals(cliente))
+			{	
+				total += listaCarrito.get(i).calcularTotal();
+			}
+		}
+		
+		if(total==0)
+		throw new Exception("No hay registros de compras en el mes "+ mes + " del " + anio + " del cliente " + cliente);
+		
+		return total;
+	}
+
+	public float calcularTotal(int mes, int anio, int dniCliente) throws Exception {
+	
+	if(mes <= 0 || mes > 12)
+	throw new Exception("No existe el mes " + mes);
+	
+	int i = 0;
+	float total = 0;
+
+	for(i = 0 ; i < listaCarrito.size(); i++)
+	{
+		if(listaCarrito.get(i).getFecha().getYear() == anio 
+		&& listaCarrito.get(i).getFecha().getMonthValue() == mes
+		&& listaCarrito.get(i).getCliente().getDni() == dniCliente)
+		{	
+			total += listaCarrito.get(i).calcularTotal();
+		}
+	}
+	
+	if(total==0)
+	throw new Exception("No hay registros de compras en el mes "+ mes + " del " + anio + " del cliente con dni " + dniCliente);
+	
+	return total;
+	
+	}
+	
 }
