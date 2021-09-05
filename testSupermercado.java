@@ -7,7 +7,7 @@ public class testSupermercado {
 
 	public static void main(String[] args) {		
 		
-		Supermercado s1 = new Supermercado();		
+		Supermercado s1 = new Supermercado();
 		
 		//Test 1 *******************************
 		
@@ -218,6 +218,8 @@ public class testSupermercado {
 				System.out.println("Test 12: Reducir cantidad de producto agregado en 10 (cantidad 15)");
 				s1.traerCarrito(1).eliminarItem(s1.traerProducto(1), 10);
 				System.out.print(s1.traerCarrito(1).traerItem(1));
+				//System.out.print(carro1.getLstItem().get(0).getCantidad());
+				
 				System.out.println("OK");
 				
 				}

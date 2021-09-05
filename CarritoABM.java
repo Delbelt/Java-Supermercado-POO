@@ -30,11 +30,10 @@ public class CarritoABM {
 	public boolean agregarCarrito(LocalDate fecha, LocalTime hora, Cliente cliente) throws Exception {
 		
 		int i = 0;
-		Carrito lista = null;
+		Carrito objeto = null;
 		
 		for (i = 0; i < listaCarrito.size(); i++) 
 		{
-
 			if(listaCarrito.get(i).getFecha() == fecha && listaCarrito.get(i).getHora() == hora &&  listaCarrito.get(i).getCliente().equals(cliente))
 			{				
 				throw new Exception("El carrito ya esta registrado");		
@@ -43,15 +42,15 @@ public class CarritoABM {
 		
 		if(listaCarrito.size() == 0)
 		{
-			lista = new Carrito(1, fecha, hora, cliente);
+			objeto = new Carrito(1, fecha, hora, cliente);
 		}
 		
 		else
 		{
-			lista = new Carrito(listaCarrito.get(listaCarrito.size()-1).getIdCarrito()+1, fecha, hora, cliente);
+			objeto = new Carrito(listaCarrito.get(listaCarrito.size()-1).getIdCarrito()+1, fecha, hora, cliente);
 		}
 		
-			return listaCarrito.add(lista);
+			return listaCarrito.add(objeto);
 	}
 	
 	public Carrito traerCarrito(int idCarrito) throws Exception	{
@@ -137,7 +136,7 @@ public class CarritoABM {
 		}
 		
 		if(total==0)
-		throw new Exception("El cliente no se encuentra registrado en la lista");
+		throw new Exception("El cliente con el dni " + dniCliente + " no se encuentra registrado en la lista");
 		
 		return total;
 	}

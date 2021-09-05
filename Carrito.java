@@ -106,8 +106,8 @@ public class Carrito {
 			{
 				if (listaItem.get(i).getProducto().equals(producto)) 
 				{
-					objeto = listaItem.get(i);
-					objeto.setCantidad(listaItem.get(i).getCantidad() + cantidad);	//Si el Item existe, le suma la cantidad
+					objeto = listaItem.get(i);	
+					objeto.setCantidad(objeto.getCantidad() + cantidad); //Si el Item existe, le suma la cantidad
 				}
 				
 				i++;
@@ -122,7 +122,7 @@ public class Carrito {
 		
 			return (objeto != null); //Si se crea el objeto = true, si no se encuentra false
 	}
-	
+		
 	public boolean eliminarItem(Producto producto, int cantidad) throws Exception {
 		
 		if(cantidad <= 0)
