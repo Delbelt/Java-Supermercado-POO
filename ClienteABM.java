@@ -27,27 +27,25 @@ public class ClienteABM {
 	public boolean agregarCliente(String cliente, long dni, String direccion) throws Exception {
 		
 		int i = 0;
-		Cliente lista = null;
+		int id = 1;
+		Cliente objeto = null;
 		
-		for (i = 0; i < listaCliente.size(); i++) 
+		for (i = 0; i < listaCliente.size(); i++)	
 		{
 			if (listaCliente.get(i).getDni() == dni)
 			{				
-				throw new Exception("El cliente: " +cliente+ " ya esta registrado");		
+				throw new Exception("El cliente con el dni " + dni + " ya esta registrado");		
 			}
 		}
 		
-		if(listaCliente.size() == 0)
+		if(listaCliente.size() > 0)
 		{
-			lista = new Cliente(1, cliente, dni, direccion);
+			id = listaCliente.get(listaCliente.size()-1).getIdCliente()+1;
 		}
+
+			objeto = new Cliente(id, cliente, dni, direccion);			
 		
-		else
-		{
-			lista = new Cliente(listaCliente.get(listaCliente.size()-1).getIdCliente()+1, cliente, dni, direccion);	
-		}
-		
-			return listaCliente.add(lista);			
+			return listaCliente.add(objeto);			
 	}
 
 	public Cliente traerCliente(int idCliente) throws Exception	{

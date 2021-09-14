@@ -93,11 +93,12 @@ public class Carrito {
 		
 		int i = 0;
 		ItemCarrito objeto = null;
+		boolean agregarItem = false;
 		
 		if(listaItem.size() == 0) //Si la lista no existe, crea el primer Item
 		{
 			objeto = new ItemCarrito(1, producto, cantidad);
-			listaItem.add(objeto);
+			agregarItem = listaItem.add(objeto);
 		}
 		
 		else
@@ -116,11 +117,11 @@ public class Carrito {
 				if(objeto == null) //si no esta el Item en la lista, lo crea con el Id correspondiente
 				{
 					objeto = new ItemCarrito(listaItem.get(listaItem.size()-1).getIdItem()+1, producto, cantidad);
-					listaItem.add(objeto);
+					agregarItem = listaItem.add(objeto);
 				}
 		}
 		
-			return (objeto != null); //Si se crea el objeto = true, si no se encuentra false
+			return agregarItem; //Si se crea/modifica el objeto = true
 	}
 		
 	public boolean eliminarItem(Producto producto, int cantidad) throws Exception {
@@ -129,31 +130,34 @@ public class Carrito {
 		throw new Exception("No se puede eliminar menos de una unidad");
 		
 		int i = 0;
-		boolean encontrado = false;
+		ItemCarrito objeto = null;
+		boolean eliminado = true;
 		
-		while(i < listaItem.size() && encontrado == false)
+		while (i < listaItem.size() && objeto == null)
 		{
-			if (listaItem.get(i).getProducto().equals(producto)) 
+			if 	(listaItem.get(i).getProducto().equals(producto)) 
 			{
 				if(listaItem.get(i).getCantidad() > cantidad)
-				{
-					listaItem.get(i).setCantidad(listaItem.get(i).getCantidad() - cantidad);
-					encontrado = true;
+				{	
+					objeto = listaItem.get(i);
+					objeto.setCantidad(listaItem.get(i).getCantidad() - cantidad);
+					eliminado = false;
+					
 				}
 				
 				else
 				{
-					listaItem.remove(i);
-					encontrado = true;
+					objeto = listaItem.get(i);
+					listaItem.remove(objeto);
 				}
 			}			
 
 			i++;
 		}
-					if(encontrado == false)
+					if(eliminado == false && objeto == null)
 					throw new Exception("El producto no se encuentra en la lista de Items");
 					
-					return (producto == null);	//Devuelve True si lo elimino	
+					return eliminado;	//Devuelve True si lo elimino	
 	}
 	
 	public ItemCarrito traerItem(int idItem) throws Exception {

@@ -9,9 +9,7 @@ public class CarritoABM {
 	
 	private List <Carrito> listaCarrito = new ArrayList<Carrito>();
 
-	public CarritoABM() {
-		super();
-	}
+	public CarritoABM() {}
 
 	public List<Carrito> getListaCarrito() {
 		return listaCarrito;
@@ -30,26 +28,23 @@ public class CarritoABM {
 	public boolean agregarCarrito(LocalDate fecha, LocalTime hora, Cliente cliente) throws Exception {
 		
 		int i = 0;
+		int id = 1;
 		Carrito objeto = null;
 		
 		for (i = 0; i < listaCarrito.size(); i++) 
 		{
-			if(listaCarrito.get(i).getFecha() == fecha && listaCarrito.get(i).getHora() == hora &&  listaCarrito.get(i).getCliente().equals(cliente))
+			if(listaCarrito.get(i).getFecha().isEqual(fecha) && listaCarrito.get(i).getHora().equals(hora) &&  listaCarrito.get(i).getCliente().equals(cliente))
 			{				
 				throw new Exception("El carrito ya esta registrado");		
 			}
 		}
 		
-		if(listaCarrito.size() == 0)
+		if (listaCarrito.size() > 0)
 		{
-			objeto = new Carrito(1, fecha, hora, cliente);
+			id = listaCarrito.get(listaCarrito.size()-1).getIdCarrito()+1;
 		}
-		
-		else
-		{
-			objeto = new Carrito(listaCarrito.get(listaCarrito.size()-1).getIdCarrito()+1, fecha, hora, cliente);
-		}
-		
+			objeto = new Carrito(id, fecha, hora, cliente);
+			
 			return listaCarrito.add(objeto);
 	}
 	
@@ -148,8 +143,8 @@ public class CarritoABM {
 
 		for(i = 0 ; i < listaCarrito.size(); i++)
 		{
-			if(listaCarrito.get(i).getFecha().isEqual(fechaInicio) || listaCarrito.get(i).getFecha().isAfter(fechaInicio)
-			&& listaCarrito.get(i).getFecha().isEqual(fechaFin) || listaCarrito.get(i).getFecha().isBefore(fechaFin))
+			if(listaCarrito.get(i).getFecha().isAfter(fechaInicio.minusDays(1))
+			&& listaCarrito.get(i).getFecha().isBefore(fechaFin.plusDays(1)))
 			{	
 				total += listaCarrito.get(i).calcularTotal();
 			}

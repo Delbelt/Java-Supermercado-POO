@@ -27,7 +27,8 @@ public class ProductoABM {
 	public boolean agregarProducto(String producto, float precio) throws Exception {
 		//COMPROBAR SI EL PRECIO INGRESADO ES POSITIVO
 		int i = 0;
-		Producto lista = null;		
+		int id = 1;
+		Producto objeto = null;		
 
 		for (i = 0; i < listaProducto.size(); i++) 
 		{
@@ -37,17 +38,15 @@ public class ProductoABM {
 			}
 		}
 		
-		if(listaProducto.size() == 0)
+		if (listaProducto.size() > 0)
 		{
-			lista = new Producto(1, producto, precio);
+			id = listaProducto.get(listaProducto.size()-1).getIdProducto()+1;
 		}
 		
-		else 
-		{
-			lista = new Producto(listaProducto.get(listaProducto.size()-1).getIdProducto()+1, producto, precio);
-		}
+			objeto = new Producto(id, producto, precio);
+	
 		
-			return listaProducto.add(lista);
+			return listaProducto.add(objeto);
 	}
 	
 	public Producto traerProducto(int idProducto) throws Exception	{
